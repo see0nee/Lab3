@@ -1,0 +1,18 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #333;
+}
+
+.images {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.images img {
+    border: 2px solid #ccc;
+    border-radius: 8px;
+}

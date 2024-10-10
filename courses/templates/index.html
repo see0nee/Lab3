@@ -1,0 +1,62 @@
+<!DOCTYPE html> <!-- использованрие Html 5 -->
+<html lang="ru"> <!-- страница поддерживает RU -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- адптивность на моб. устройствах -->
+    
+    {% load static %} <!-- команда Django, позволяющая использовать статистические файлы (стили, изображения) -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> <!-- подключение внешнего файла стилей -->
+    <title>Онлайн-платформа для курсов</title>
+    
+    <!-- Применение темы -->
+    <style>
+        body {
+            background-color: {% if theme == 'dark' %} #333 {% else %} #fff {% endif %};
+            color: {% if theme == 'dark' %} #fff {% else %} #000 {% endif %};
+        }
+        h1 {
+            color: {% if theme == 'dark' %} #fff {% else %} #000 {% endif %}; /* Цвет заголовка в зависимости от темы */
+        }
+    </style>
+</head>
+<body>
+    <!-- Изменение текста заголовка в зависимости от темы -->
+    <h1>Добро пожаловать на платформу курсов</h1>
+
+    <!-- Вставка изображений -->
+    <div class="images">
+        <img src="{% static 'images/image1.webp' %}" alt="Курс 1" width="300">
+        <img src="{% static 'images/image2.jpg' %}" alt="Курс 2" width="300">
+    </div>
+
+    <!-- HTML форма для выбора темы и ввода данных -->
+    <form method="POST"> <!-- Создает форму для ввода данных. Метод POST используется для отправки данных на сервер. -->
+        {% csrf_token %} <!-- Это защита от CSRF (межсайтовой подделки запросов). Django требует этот токен для форм. -->
+        
+        <!-- Поле ввода имени -->
+        <label for="name">Имя:</label>
+        <input type="text" id="name" name="name" required placeholder="Введите ваше имя">
+
+        <!-- Поле ввода номера телефона -->
+        <label for="phone">Номер телефона:</label>
+        <input type="tel" id="phone" name="phone" required placeholder="Введите ваш номер">
+
+        <!-- Поле выбора темы -->
+        <label for="theme">Выберите тему:</label>
+        <select id="theme" name="theme" onchange="this.form.submit()">
+            <option value="dark" {% if theme == 'dark' %}selected{% endif %}>Темная</option>
+            <option value="light" {% if theme == 'light' %}selected{% endif %}>Светлая</option>
+        </select>
+        
+        <!-- Кнопка отправки формы -->
+        <button type="submit">Отправить</button>
+    </form>
+
+    <!-- Отображение выбранной темы -->
+    {% if theme == 'dark' %}
+        <p>Вы выбрали темную тему.</p>
+    {% else %}
+        <p>Вы выбрали светлую тему.</p>
+    {% endif %}
+</body>
+</html>
